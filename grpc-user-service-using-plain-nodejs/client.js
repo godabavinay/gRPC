@@ -22,3 +22,22 @@ client.CreateUser(
     });
   }
 );
+
+const call = client.ListUsers({}, null);
+
+call.on("data", (user) => {
+  console.log("Streamed user: ", user);
+});
+
+call.on("end", () => {
+  console.log("All users streamed.");
+});
+
+const stream = client.CreateUsersStream((err, summary) => {
+  if (err) return console.error(err);
+  console.log("Created users count: ", summary.createdCount);
+});
+
+stream.write({ name: "Bob", email: "bob@example.com" });
+stream.write({ name: "Charlie", email: "charlie@example.com" });
+stream.end();

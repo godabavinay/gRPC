@@ -5,6 +5,10 @@ package user;
 service UserService {
 	rpc CreateUser (UserRequest) returns (UserResponse);
 	rpc GetUser (UserIdRequest) returns (UserResponse);
+
+	// Streaming RPC
+	rpc ListUsers (Empty) returns (stream UserResponse);
+	rpc CreateUsersStream (stream UserRequest) returns (CreateUsersSummary);
 }
 
 message UserRequest {
@@ -20,4 +24,10 @@ message UserResponse {
 	string id = 1;
 	string name = 2;
 	string email = 3;
+}
+
+message Empty {}
+
+message CreateUsersSummary {
+	int32 createdCount = 1;
 }

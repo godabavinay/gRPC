@@ -17,6 +17,7 @@ server.addService(userPackage.UserService.service, {
     users.set(id, user);
     callback(null, user);
   },
+
   GetUser: (call, callback) => {
     const { id } = call.request;
     const user = users.get(id);
@@ -29,6 +30,26 @@ server.addService(userPackage.UserService.service, {
     }
 
     callback(null, user);
+  },
+
+  ListUsers: (call) => {
+    for (const user of users.values()) {
+      call.write(user);
+    }
+    call.end();
+  },
+
+  CreateUsersStream: (call, callback) => {
+    let count = 0;
+    call.on("data", (userReq) => {
+      const id = uuidv4();
+      users.set(id, { id, ...userReq });
+      count++;
+    });
+
+    call.on("end", () => {
+      callback(null, { createdCount: count });
+    });
   },
 });
 
