@@ -1,0 +1,12 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.14.0",
+    "@grpc/proto-loader": "^0.8.0",
+    "autocannon": "^8.0.0",
+    "express": "^5.1.0",
+    "ghz": "^0.0.0",
+    "p-limit": "^7.1.1",
+    "uuid": "^13.0.0"
+  }
+}
